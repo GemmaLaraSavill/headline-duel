@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             HeadlineDuelTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "Headline Duel",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
