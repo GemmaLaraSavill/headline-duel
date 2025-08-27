@@ -1,7 +1,7 @@
 package dev.myhappyplace.headlineduel.data.datasource
 
-import dev.myhappyplace.headlineduel.data.network.KtorClientProvider
 import dev.myhappyplace.headlineduel.domain.model.ClassificationResult
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -10,10 +10,9 @@ import io.ktor.http.contentType
 import kotlinx.serialization.Serializable
 
 class NewsClassifierRemoteDataSourceImpl(
+    private val client: HttpClient,
     private val baseUrl: String = "https://gemmalarasav-news-classifier-space.hf.space"
 ) : NewsClassifierRemoteDataSource {
-
-    private val client = KtorClientProvider.client
 
     @Serializable
     data class PredictionResponse(val data: List<String>)

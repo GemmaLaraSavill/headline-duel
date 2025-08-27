@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     testImplementation(libs.mockk.agent)
     testImplementation(libs.koin.test)
     testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.ktor.client.mock)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
