@@ -21,10 +21,14 @@ class HeadlineViewModel(
     fun onUserAnswer(answer: String) {
         val currentHeadline = _uiState.value.headline
         viewModelScope.launch {
-            val modelResult = classifyHeadlineUseCase(currentHeadline)
             _uiState.value = _uiState.value.copy(
                 userAnswer = answer,
-                modelResult = modelResult
+                isLoading = true
+            )
+            val modelResult = classifyHeadlineUseCase(currentHeadline)
+            _uiState.value = _uiState.value.copy(
+                modelResult = modelResult,
+                isLoading = false
             )
         }
     }
