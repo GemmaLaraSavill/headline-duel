@@ -23,8 +23,12 @@ import dev.myhappyplace.headlineduel.ui.viewmodel.HeadlineViewModel
 fun HeadlineScreen(viewModel: HeadlineViewModel) {
     val state by viewModel.uiState.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp),  verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp), verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(text = state.headline, style = MaterialTheme.typography.headlineSmall)
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -34,15 +38,23 @@ fun HeadlineScreen(viewModel: HeadlineViewModel) {
             listOf("World", "Sports", "Business", "Sci/Tech").forEach { category ->
                 Button(
                     onClick = { viewModel.onUserAnswer(category) },
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
                 ) {
                     Text(category)
                 }
             }
         } else {
-            // Show results
             Text("Your answer: ${state.userAnswer}")
-            Text("Model answer: ${state.modelResult!!.label} (${String.format("%.2f", state.modelResult!!.score)})")
+            Text(
+                "Model answer: ${state.modelResult!!.label} (${
+                    String.format(
+                        "%.2f",
+                        state.modelResult!!.score
+                    )
+                })"
+            )
 
             if (state.userAnswer == state.modelResult!!.label) {
                 Text("✅ You got it right!", color = Color.Green)

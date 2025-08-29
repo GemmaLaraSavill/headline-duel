@@ -23,6 +23,7 @@ class NewsClassifierRemoteDataSourceImpl(
 
     @Serializable
     data class PredictionResponse(val value: List<String>)
+
     override suspend fun classifyHeadline(text: String): ClassificationResult {
         val eventResponse: EventResponse = client.post(baseUrl) {
             contentType(ContentType.Application.Json)
@@ -32,7 +33,6 @@ class NewsClassifierRemoteDataSourceImpl(
         val sseText = client.get("$baseUrl/${eventResponse.event_id}") {
             accept(ContentType.Text.EventStream)
         }.bodyAsText()
-
         val jsonLine = sseText.lineSequence()
             .firstOrNull { it.startsWith("data:") }
             ?.removePrefix("data:")

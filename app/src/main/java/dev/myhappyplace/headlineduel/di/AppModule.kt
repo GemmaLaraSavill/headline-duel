@@ -12,8 +12,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-   single<HttpClient> { KtorClientProvider.client }
-
+    single<HttpClient> { KtorClientProvider.client }
     single<NewsClassifierRemoteDataSource> { NewsClassifierRemoteDataSourceImpl(get()) }
     single<NewsClassifierRepository> { NewsClassifierRepositoryImpl(get()) }
     factory { ClassifyHeadlineUseCase(get()) }
