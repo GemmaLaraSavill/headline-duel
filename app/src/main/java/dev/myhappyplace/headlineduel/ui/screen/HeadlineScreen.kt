@@ -16,12 +16,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.myhappyplace.headlineduel.R
 import dev.myhappyplace.headlineduel.ui.viewmodel.HeadlineViewModel
 
 @Composable
 fun HeadlineScreen(viewModel: HeadlineViewModel) {
     val state by viewModel.uiState.collectAsState()
+    val configuration = LocalConfiguration.current
+    val locale = configuration.locales[0]
 
     Column(
         modifier = Modifier
@@ -35,42 +40,46 @@ fun HeadlineScreen(viewModel: HeadlineViewModel) {
 
         if (state.modelResult == null) {
             // Show options
-            listOf("World", "Sports", "Business", "Sci/Tech").forEach { category ->
+            val categories = listOf(
+                R.string.world,
+                R.string.sports,
+                R.string.business,
+                R.string.sci_tech
+            )
+            categories.forEach { resId ->
+                val category = stringResource(id = resId)
                 Button(
                     onClick = { viewModel.onUserAnswer(category) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp)
                 ) {
-                    Text(category)
+                    Text(stringResource(id = resId))
                 }
             }
         } else {
-            Text("Your answer: ${state.userAnswer}")
-            Text(
-                "Model answer: ${state.modelResult!!.label} (${
-                    String.format(
-                        "%.2f",
-                        state.modelResult!!.score
-                    )
-                })"
-            )
+            val modelResult = state.modelResult
+            if (modelResult != null) {
+                val score = String.format(locale, "%.2f", modelResult.score)
+                Text(stringResource(id = R.string.your_answer, state.userAnswer ?: ""))
+                Text(stringResource(id = R.string.model_answer, modelResult.label, score))
 
-            if (state.userAnswer == state.modelResult!!.label) {
-                Text("✅ You got it right!", color = Color.Green)
-            } else {
-                Text("❌ Better luck next time!", color = Color.Red)
-            }
+                if (state.userAnswer == modelResult.label) {
+                    Text(stringResource(id = R.string.correct_answer), color = Color.Green)
+                } else {
+                    Text(stringResource(id = R.string.wrong_answer), color = Color.Red)
+                }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = { viewModel.nextHeadline() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp)
-            ) {
-                Text("Next")
+                Button(
+                    onClick = { viewModel.nextHeadline() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                ) {
+                    Text(stringResource(id = R.string.next))
+                }
             }
         }
     }

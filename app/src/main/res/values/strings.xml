@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Headline Duel</string>
+    <string name="world">World</string>
+    <string name="sports">Sports</string>
+    <string name="business">Business</string>
+    <string name="sci_tech">Sci/Tech</string>
+    <string name="your_answer">Your answer: %1$s</string>
+    <string name="model_answer">Model answer: %1$s (%2$s)</string>
+    <string name="correct_answer">✅ You got it right!</string>
+    <string name="wrong_answer">❌ Better luck next time!</string>
+    <string name="next">Next</string>
 </resources>
