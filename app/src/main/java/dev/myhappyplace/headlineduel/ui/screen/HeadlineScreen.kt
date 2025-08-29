@@ -2,15 +2,26 @@ package dev.myhappyplace.headlineduel.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Business
+import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.filled.Science
+import androidx.compose.material.icons.filled.Sports
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -22,7 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.myhappyplace.headlineduel.R
 import dev.myhappyplace.headlineduel.domain.model.ClassificationResult
 import dev.myhappyplace.headlineduel.ui.viewmodel.HeadlineViewModel
@@ -53,7 +67,18 @@ fun HeadlineScreen(viewModel: HeadlineViewModel) {
             if (state.isLoading) {
                 LoadingState()
             } else {
-                Text(text = state.headline, style = MaterialTheme.typography.headlineSmall)
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = state.headline,
+                        style = MaterialTheme.typography.headlineSmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -87,17 +112,35 @@ fun LoadingState() {
     CircularProgressIndicator()
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun QuestionState(categories: List<Int>, onAnswer: (String) -> Unit) {
-    categories.forEach { resId ->
-        val category = stringResource(id = resId)
-        Button(
-            onClick = { onAnswer(category) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp)
-        ) {
-            Text(stringResource(id = resId))
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        categories.forEach { resId ->
+            val category = stringResource(id = resId)
+            OutlinedButton(
+                onClick = { onAnswer(category) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+            ) {
+                val icon = when (resId) {
+                    R.string.world -> Icons.Default.Public
+                    R.string.sports -> Icons.Default.Sports
+                    R.string.business -> Icons.Default.Business
+                    else -> Icons.Default.Science
+                }
+                Icon(
+                    imageVector = icon,
+                    contentDescription = stringResource(id = resId),
+                    modifier = Modifier.padding(8.dp)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(stringResource(id = resId), fontSize = 22.sp)
+            }
         }
     }
 }
@@ -109,24 +152,68 @@ fun AnswerState(
     onNext: () -> Unit,
     locale: Locale
 ) {
-    val score = String.format(locale, "%.2f", modelResult.score)
-    Text(stringResource(id = R.string.your_answer, userAnswer))
-    Text(stringResource(id = R.string.model_answer, modelResult.label, score))
-
-    if (userAnswer == modelResult.label) {
-        Text(stringResource(id = R.string.correct_answer), color = Color.Green)
+    val isCorrect = userAnswer == modelResult.label
+    val cardColors = if (isCorrect) {
+        CardDefaults.cardColors(containerColor = Color.Green.copy(alpha = 0.1f))
     } else {
-        Text(stringResource(id = R.string.wrong_answer), color = Color.Red)
+        CardDefaults.cardColors(containerColor = Color.Red.copy(alpha = 0.1f))
     }
 
-    Spacer(modifier = Modifier.height(16.dp))
-
-    Button(
-        onClick = onNext,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(stringResource(id = R.string.next))
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = cardColors
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.your_answer, userAnswer),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                val score = String.format(locale, "%.2f", modelResult.score)
+                Text(
+                    text = stringResource(id = R.string.model_answer, modelResult.label, score),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (isCorrect) {
+            Text(
+                text = stringResource(id = R.string.correct_answer),
+                color = Color(0xFF006400),
+                style = MaterialTheme.typography.headlineMedium
+            )
+        } else {
+            Text(
+                text = stringResource(id = R.string.wrong_answer),
+                color = Color(0xFFB00020),
+                style = MaterialTheme.typography.headlineMedium
+            )
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Button(
+            onClick = onNext,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        ) {
+            Text(stringResource(id = R.string.next), fontSize = 24.sp)
+            Spacer(modifier = Modifier.height(4.dp))
+            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
+        }
     }
 }
