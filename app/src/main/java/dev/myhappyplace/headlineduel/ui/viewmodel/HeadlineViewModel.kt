@@ -41,4 +41,12 @@ class HeadlineViewModel(
             )
         }
     }
+
+    fun nextHeadline() {
+        _uiState.value = _uiState.value.copy(
+            modelResult = null,
+            userAnswer = null
+        )
+        getHeadline()
+    }
 }

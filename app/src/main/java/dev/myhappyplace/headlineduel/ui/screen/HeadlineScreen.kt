@@ -61,6 +61,17 @@ fun HeadlineScreen(viewModel: HeadlineViewModel) {
             } else {
                 Text("❌ Better luck next time!", color = Color.Red)
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { viewModel.nextHeadline() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+            ) {
+                Text("Next")
+            }
         }
     }
 }
