@@ -3,19 +3,28 @@ package dev.myhappyplace.headlineduel.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.myhappyplace.headlineduel.domain.usecase.ClassifyHeadlineUseCase
+import dev.myhappyplace.headlineduel.domain.usecase.GetHeadlineUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class HeadlineViewModel(
-    private val classifyHeadlineUseCase: ClassifyHeadlineUseCase
+    private val classifyHeadlineUseCase: ClassifyHeadlineUseCase,
+    private val getHeadlineUseCase: GetHeadlineUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HeadlineUiState())
     val uiState: StateFlow<HeadlineUiState> = _uiState
 
-    fun setHeadline(headline: String) {
-        _uiState.value = HeadlineUiState(headline = headline)
+    init {
+        getHeadline()
+    }
+
+    fun getHeadline() {
+        viewModelScope.launch {
+            val headline = getHeadlineUseCase()
+            _uiState.value = _uiState.value.copy(headline = headline.text)
+        }
     }
 
     fun onUserAnswer(answer: String) {
