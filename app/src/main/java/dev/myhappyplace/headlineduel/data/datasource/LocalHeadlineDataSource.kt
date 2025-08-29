@@ -49,7 +49,14 @@ class LocalHeadlineDataSource : HeadlineDataSource {
         Headline("Afghan Army Dispatched to Calm Violence KABUL, Afghanistan - Government troops intervened in Afghanistan's latest outbreak of deadly fighting between warlords, flying from the capital to the far west on U.S. and NATO airplanes to retake an air base contested in the violence, officials said Sunday...")
     )
 
+    private val maxLength = 250
+
     override suspend fun getHeadline(): Headline {
-        return headlines.random()
+        val headline = headlines.random()
+        return if (headline.text.length > maxLength) {
+            Headline(headline.text.substring(0, maxLength) + "...")
+        } else {
+            headline
+        }
     }
 }
