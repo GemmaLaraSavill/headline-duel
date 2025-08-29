@@ -1,6 +1,7 @@
 package dev.myhappyplace.headlineduel.data
 
 import dev.myhappyplace.headlineduel.data.datasource.NewsClassifierRemoteDataSource
+import dev.myhappyplace.headlineduel.data.repository.NewsClassifierRepositoryImpl
 import dev.myhappyplace.headlineduel.domain.model.ClassificationResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

@@ -1,11 +1,11 @@
 package dev.myhappyplace.headlineduel.di
 
-import dev.myhappyplace.headlineduel.data.NewsClassifierRepositoryImpl
 import dev.myhappyplace.headlineduel.data.datasource.HeadlineDataSource
 import dev.myhappyplace.headlineduel.data.datasource.LocalHeadlineDataSource
 import dev.myhappyplace.headlineduel.data.datasource.NewsClassifierRemoteDataSource
 import dev.myhappyplace.headlineduel.data.datasource.NewsClassifierRemoteDataSourceImpl
 import dev.myhappyplace.headlineduel.data.network.KtorClientProvider
+import dev.myhappyplace.headlineduel.data.repository.NewsClassifierRepositoryImpl
 import dev.myhappyplace.headlineduel.data.repository.NewsHeadlineRepositoryImpl
 import dev.myhappyplace.headlineduel.domain.repository.NewsClassifierRepository
 import dev.myhappyplace.headlineduel.domain.repository.NewsHeadlineRepository
@@ -28,7 +28,6 @@ val appModule = module {
             getHeadlineUseCase = get<GetHeadlineUseCase>()
         )
     }
-
     single<HeadlineDataSource> { LocalHeadlineDataSource() }
     single<NewsHeadlineRepository> { NewsHeadlineRepositoryImpl(get()) }
 }
