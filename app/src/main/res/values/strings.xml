@@ -11,4 +11,9 @@
     <string name="next">Next</string>
     <string name="information">Information</string>
     <string name="back">Back</string>
+    <string name="information_title">About Headline Duel</string>
+    <string name="information_body">This app is powered by a fine-tuned DistilBERT model for news classification.\n\n
+The model was originally trained as part of my Udacity Nanodegree project, using the AG News dataset, and then fine-tuned with LoRA adapters for efficiency.\n\n
+To bring the project into the “real world,” I uploaded the model to Hugging Face and exposed it via an API. Headline Duel is the next step: an Android app where humans can classify news headlines and compare their answers against the model’s predictions.\n\n
+This closes the loop between my work in machine learning and my core expertise in Android development — showing how AI can be tested, validated, and integrated into practical mobile experiences.</string>
 </resources>
