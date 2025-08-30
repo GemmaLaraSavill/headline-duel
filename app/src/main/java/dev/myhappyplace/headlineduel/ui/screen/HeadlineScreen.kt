@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Business
@@ -79,13 +81,22 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (state.isLoading) {
                 LoadingState()
             } else {
+                Text(
+                    text = stringResource(id = R.string.headline_prompt),
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontSize = 18.sp,
+                    ),
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.padding(all = 16.dp)
+                )
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -93,7 +104,7 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                 ) {
                     Text(
                         text = state.headline,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.headlineSmall.copy(fontSize = 22.sp),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(16.dp)
                     )
@@ -108,7 +119,10 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                         R.string.business,
                         R.string.sci_tech
                     )
-                    QuestionState(categories = categories, onAnswer = viewModel::onUserAnswer)
+                    QuestionState(
+                        categories = categories,
+                        onAnswer = viewModel::onUserAnswer
+                    )
                 } else {
                     state.userAnswer?.let { userAnswer ->
                         state.modelResult?.let { modelResult ->
