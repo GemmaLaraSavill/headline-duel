@@ -47,7 +47,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HeadlineScreen(viewModel: HeadlineViewModel) {
+fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
     val state by viewModel.uiState.collectAsState()
     val configuration = LocalConfiguration.current
     val locale = configuration.locales[0]
@@ -65,7 +65,7 @@ fun HeadlineScreen(viewModel: HeadlineViewModel) {
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
                 actions = {
-                    IconButton(onClick = { /* TODO: Open information screen */ }) {
+                    IconButton(onClick = { onNavigateToInfo() }) {
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             contentDescription = stringResource(id = R.string.information)
