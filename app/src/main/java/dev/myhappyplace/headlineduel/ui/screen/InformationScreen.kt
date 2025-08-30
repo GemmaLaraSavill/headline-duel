@@ -37,7 +37,8 @@ fun InformationScreen(onBack: () -> Unit) {
                 title = {
                     Text(
                         stringResource(id = R.string.app_name),
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.titleLarge.copy(fontSize = 30.sp),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(end = 68.dp),

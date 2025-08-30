@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Sports
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -60,7 +59,8 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                 title = {
                     Text(
                         stringResource(id = R.string.app_name),
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.titleLarge.copy(fontSize = 30.sp),
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
                     )
@@ -81,7 +81,7 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp)
+                .padding(start = 16.dp, end = 16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -238,13 +238,13 @@ fun AnswerState(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Button(
+        OutlinedButton(
             onClick = onNext,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
         ) {
-            Text(stringResource(id = R.string.next), fontSize = 24.sp)
+            Text(stringResource(id = R.string.next), fontSize = 22.sp)
             Spacer(modifier = Modifier.height(4.dp))
             Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
         }
