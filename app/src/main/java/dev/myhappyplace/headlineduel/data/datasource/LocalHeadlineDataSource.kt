@@ -51,10 +51,16 @@ class LocalHeadlineDataSource : HeadlineDataSource {
 
     private val maxLength = 250
 
-    override suspend fun getHeadline(): Headline {
-        val headline = headlines.random()
+    override suspend fun getHeadline(excludedIndices: Set<Int>): Headline {
+        var index: Int
+        do {
+            index = headlines.indices.random()
+        } while (excludedIndices.contains(index))
+
+        val headline = headlines[index].copy(id = index)
+
         return if (headline.text.length > maxLength) {
-            Headline(headline.text.substring(0, maxLength) + "...")
+            Headline(headline.text.substring(0, maxLength) + "...", id = headline.id)
         } else {
             headline
         }

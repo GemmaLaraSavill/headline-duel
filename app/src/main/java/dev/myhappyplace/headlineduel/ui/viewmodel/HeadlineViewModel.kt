@@ -16,13 +16,16 @@ class HeadlineViewModel(
     private val _uiState = MutableStateFlow(HeadlineUiState())
     val uiState: StateFlow<HeadlineUiState> = _uiState
 
+    private val shownHeadlinesIndices = mutableSetOf<Int>()
+
     init {
         getHeadline()
     }
 
     fun getHeadline() {
         viewModelScope.launch {
-            val headline = getHeadlineUseCase()
+            val headline = getHeadlineUseCase(shownHeadlinesIndices)
+            shownHeadlinesIndices.add(headline.id)
             _uiState.value = _uiState.value.copy(headline = headline.text)
         }
     }
