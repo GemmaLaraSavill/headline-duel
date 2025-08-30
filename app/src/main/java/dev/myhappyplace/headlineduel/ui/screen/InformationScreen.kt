@@ -1,5 +1,6 @@
 package dev.myhappyplace.headlineduel.ui.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,7 +38,7 @@ fun InformationScreen(onBack: () -> Unit) {
                 title = {
                     Text(
                         stringResource(id = R.string.app_name),
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.titleLarge.copy(fontSize = 30.sp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -45,12 +46,13 @@ fun InformationScreen(onBack: () -> Unit) {
                         textAlign = TextAlign.Center
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(id = R.string.back)
+                            contentDescription = stringResource(id = R.string.back),
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -62,12 +64,14 @@ fun InformationScreen(onBack: () -> Unit) {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(32.dp)
+                .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = stringResource(id = R.string.information_title),
                 style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -75,6 +79,7 @@ fun InformationScreen(onBack: () -> Unit) {
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontSize = 18.sp
                 ),
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }

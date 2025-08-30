@@ -1,5 +1,6 @@
 package dev.myhappyplace.headlineduel.ui.screen
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -34,7 +35,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +43,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.myhappyplace.headlineduel.R
 import dev.myhappyplace.headlineduel.domain.model.ClassificationResult
+import dev.myhappyplace.headlineduel.ui.theme.CorrectAnswerBackgroundDark
+import dev.myhappyplace.headlineduel.ui.theme.CorrectAnswerBackgroundLight
+import dev.myhappyplace.headlineduel.ui.theme.CorrectAnswerTextDark
+import dev.myhappyplace.headlineduel.ui.theme.CorrectAnswerTextLight
+import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerBackgroundDark
+import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerBackgroundLight
+import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerTextDark
+import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerTextLight
 import dev.myhappyplace.headlineduel.ui.viewmodel.HeadlineViewModel
 import java.util.Locale
 
@@ -59,18 +67,19 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                 title = {
                     Text(
                         stringResource(id = R.string.app_name),
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.titleLarge.copy(fontSize = 30.sp),
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
                 actions = {
                     IconButton(onClick = { onNavigateToInfo() }) {
                         Icon(
                             imageVector = Icons.Outlined.Info,
-                            contentDescription = stringResource(id = R.string.information)
+                            contentDescription = stringResource(id = R.string.information),
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -100,15 +109,20 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondary
+                    )
                 ) {
                     Text(
                         text = state.headline,
                         style = MaterialTheme.typography.headlineSmall.copy(fontSize = 22.sp),
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(16.dp),
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
                 }
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -186,11 +200,12 @@ fun AnswerState(
     locale: Locale
 ) {
     val isCorrect = userAnswer == modelResult.label
-    val cardColors = if (isCorrect) {
-        CardDefaults.cardColors(containerColor = Color.Green.copy(alpha = 0.1f))
+    val cardBackgroundColor = if (isCorrect) {
+        if (isSystemInDarkTheme()) CorrectAnswerBackgroundDark else CorrectAnswerBackgroundLight
     } else {
-        CardDefaults.cardColors(containerColor = Color.Red.copy(alpha = 0.1f))
+        if (isSystemInDarkTheme()) WrongAnswerBackgroundDark else WrongAnswerBackgroundLight
     }
+    val cardColors = CardDefaults.cardColors(containerColor = cardBackgroundColor)
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -225,13 +240,13 @@ fun AnswerState(
         if (isCorrect) {
             Text(
                 text = stringResource(id = R.string.correct_answer),
-                color = Color(0xFF006400),
+                color = if (isSystemInDarkTheme()) CorrectAnswerTextDark else CorrectAnswerTextLight,
                 style = MaterialTheme.typography.headlineMedium
             )
         } else {
             Text(
                 text = stringResource(id = R.string.wrong_answer),
-                color = Color(0xFFB00020),
+                color = if (isSystemInDarkTheme()) WrongAnswerTextDark else WrongAnswerTextLight,
                 style = MaterialTheme.typography.headlineMedium
             )
         }
