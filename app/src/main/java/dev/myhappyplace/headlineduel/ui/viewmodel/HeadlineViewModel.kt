@@ -26,7 +26,10 @@ class HeadlineViewModel(
         viewModelScope.launch {
             val headline = getHeadlineUseCase(shownHeadlinesIndices)
             shownHeadlinesIndices.add(headline.id)
-            _uiState.value = _uiState.value.copy(headline = headline.text)
+            _uiState.value = _uiState.value.copy(
+                headline = headline.text,
+                correctClassification = headline.correctClassification
+            )
         }
     }
 
@@ -48,7 +51,8 @@ class HeadlineViewModel(
     fun nextHeadline() {
         _uiState.value = _uiState.value.copy(
             modelResult = null,
-            userAnswer = null
+            userAnswer = null,
+            correctClassification = null
         )
         getHeadline()
     }

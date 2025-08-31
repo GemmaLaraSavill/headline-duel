@@ -5,48 +5,174 @@ import dev.myhappyplace.headlineduel.domain.model.Headline
 class LocalHeadlineDataSource : HeadlineDataSource {
 
     private val headlines = listOf(
-        Headline("Fears for T N pension after talks Unions representing workers at Turner Newall say they are 'disappointed' after talks with the company's new owners."),
-        Headline("The Race is On: Second Private Team Sets Launch Date for Human Spaceflight (SPACE.com) SPACE.com - TORONTO, Canada -- A second private team of rocketeers competing for the Ansari X Prize -- a  $10 million award for the first private team to launch a reusable manned spacecraft into suborbital flight twice in two weeks -- has unveiled their launch date."),
-        Headline("Mighty Ortiz makes sure Sox can rest easy Just imagine what David Ortiz could do on a good night's rest. Don't look now, but the Red Sox are just one game behind the Yankees in the loss column."),
-        Headline("Sister of man who died in Vancouver police custody slams chief (Canadian Press) Canadian Press - VANCOUVER (CP) - The sister of a man who died in police custody after being repeatedly shot with a Taser has slammed the police chief for saying the death was not suspicious."),
-        Headline("Ky. Company Wins Grant to Study Peptides (AP) AP - A company founded by a chemistry researcher at the University of Louisville won a grant to develop a method of producing better peptides, which are short chains of amino acids, the building blocks of proteins."),
-        Headline("Prediction Unit Helps Forecast Wildfires (AP) AP - It's barely dawn when Mike Fitzpatrick starts his shift with a blur of colorful maps, figures and endless charts, but already he knows what the day will bring. Lightning will strike in places he expects. Winds will pick up, moist places will dry and flames will roar."),
-        Headline("Calif. Aims to Limit Farm-Related Smog (AP) AP - Southern California's smog-fighting agency went after emissions of the bovine variety Friday, adopting the nation's first rules to reduce air pollution from dairy cow manure."),
-        Headline("Open Letter Against British Copyright Indoctrination in Schools The British Department for Education and Skills (DfES) recently launched a Music Manifesto campaign, with the ostensible intention of educating the next generation of British musicians. Unfortunately, they also teamed up with the music industry (EMI, and various artists) to make this popular. EMI has apparently negotiated their end well, so that children in our schools will now be indoctrinated about the illegality of downloading music.The ignorance and audacity of this got to me a little, so I wrote an open letter to the DfES about it. Unfortunately, it's pedantic, as I suppose you have to be when writing to goverment representatives. But I hope you find it useful, and perhaps feel inspired to do something similar, if or when the same thing has happened in your area."),
-        Headline("Loosing the War on Terrorism Sven Jaschan, self-confessed author of the Netsky and Sasser viruses, is responsible for 70 percent of virus infections in 2004, according to a six-month virus roundup published Wednesday by antivirus company Sophos. The 18-year-old Jaschan was taken into custody in Germany in May by police who said he had admitted programming both the Netsky and Sasser worms, something experts at Microsoft confirmed. (A Microsoft antivirus reward program led to the teenager's arrest.) During the five months preceding Jaschan's capture, there were at least 25 variants of Netsky and one of the port-scanning network worm Sasser. Graham Cluley, senior technology consultant at Sophos, said it was staggeri ..."),
-        Headline("FOAFKey: FOAF, PGP, Key Distribution, and Bloom Filters FOAF/LOAF  and bloom filters have a lot of interesting properties for social network and whitelist distribution. I think we can go one level higher though and include GPG OpenPGP key fingerprint distribution in the FOAF file for simple web-of-trust based key distribution. What if we used FOAF and included the PGP key fingerprints for identities? This could mean a lot.  You include the PGP key fingerprints within the FOAF file of your direct friends and then include a bloom filter of the PGP key fingerprints of your entire whitelist (the source FOAF file would of course need to be encrypted ). Your whitelist would be populated from the social network as your client discovered new identit ... "),
-        Headline("E-mail scam targets police chief Wiltshire Police warns about phishing after its fraud squad chief was targeted."),
-        Headline("Card fraud unit nets 36,000 cards In its first two years, the UK's dedicated card fraud unit, has recovered 36,000 stolen cards and 171 arrests - and estimates it saved 65m."),
-        Headline("Group to Propose New High-Speed Wireless Format  LOS ANGELES (Reuters) - A group of technology companies  including Texas Instruments Inc. STMicroelectronics and Broadcom Corp., on Thursday said they  will propose a new wireless networking standard up to 10 times  the speed of the current generation."),
-        Headline("Apple Launches Graphics Software, Video Bundle  LOS ANGELES (Reuters) - Apple Computer Inc. on  Tuesday began shipping a new program designed to let users  create real-time motion graphics and unveiled a discount  video-editing software bundle featuring its flagship Final Cut  Pro software."),
-        Headline("Dutch Retailer Beats Apple to Local Download Market  AMSTERDAM (Reuters) - Free Record Shop, a Dutch music  retail chain, beat Apple Computer Inc. to market on Tuesday  with the launch of a new download service in Europe's latest  battleground for digital song services."),
-        Headline("Super ant colony hits Australia A giant 100km colony of ants  which has been discovered in Melbourne, Australia, could threaten local insect species."),
-        Headline("Socialites unite dolphin groups Dolphin groups, or pods, rely on socialites to keep them from collapsing, scientists claim."),
-        Headline("Teenage T. rex's monster growth Tyrannosaurus rex achieved its massive size due to an enormous growth spurt during its adolescent years."),
-        Headline("Scientists Discover Ganymede has a Lumpy Interior Jet Propulsion Lab -- Scientists have discovered irregular lumps beneath the icy surface of Jupiter's largest moon, Ganymede. These irregular masses may be rock formations, supported by Ganymede's icy shell for billions of years..."),
-        Headline("Mars Rovers Relay Images Through Mars Express European Space Agency -- ESAs Mars Express has relayed pictures from one of NASA's Mars rovers for the first time, as part of a set of interplanetary networking demonstrations.     The demonstrations pave the way for future Mars missions to draw on joint interplanetary networking capabilities..."),
-        Headline("Rocking the Cradle of Life When did life begin? One evidential clue stems from the fossil records in Western Australia, although whether these layered sediments are biological or chemical has spawned a spirited debate. Oxford researcher, Nicola McLoughlin, describes some of the issues in contention."),
-        Headline("Storage, servers bruise HP earnings update Earnings per share rise compared with a year ago, but company misses analysts' expectations by a long shot."),
-        Headline("IBM to hire even more new workers By the end of the year, the computing giant plans to have its biggest headcount since 1991."),
-        Headline("Sun's Looking Glass Provides 3D View Developers get early code for new operating system 'skin' still being crafted."),
-        Headline("IBM Chips May Someday Heal Themselves New technology applies electrical fuses to help identify and repair faults."),
-        Headline("Some People Not Eligible to Get in on Google IPO Google has billed its IPO as a way for everyday people to get in on the process, denying Wall Street the usual stranglehold it's had on IPOs. Public bidding, a minimum of just five shares, an open process with 28 underwriters - all this pointed to a new level of public participation. But this isn't the case."),
-        Headline("Rivals Try to Turn Tables on Charles Schwab By MICHAEL LIEDTKE     SAN FRANCISCO (AP) -- With its low prices and iconoclastic attitude, discount stock broker Charles Schwab Corp. (SCH) represented an annoying stone in Wall Street's wing-tipped shoes for decades..."),
-        Headline("News: Sluggish movement on power grid cyber security Industry cyber security standards fail to reach some of the most vulnerable components of the power grid."),
-        Headline("Giddy Phelps Touches Gold for First Time Michael Phelps won the gold medal in the 400 individual medley and set a world record in a time of 4 minutes 8.26 seconds."),
-        Headline("Tougher rules won't soften Law's game FOXBOROUGH -- Looking at his ridiculously developed upper body, with huge biceps and hardly an ounce of fat, it's easy to see why Ty Law, arguably the best cornerback in football, chooses physical play over finesse. That's not to imply that he's lacking a finesse component, because he can shut down his side of the field much as Deion Sanders ..."),
-        Headline("Shoppach doesn't appear ready to hit the next level With the weeks dwindling until Jason Varitek enters free agency, the Red Sox continue to carefully monitor Kelly Shoppach , their catcher of the future, in his climb toward the majors. The Sox like most of what they have seen at Triple A Pawtucket from Shoppach, though it remains highly uncertain whether he can make the adjustments at the plate ..."),
-        Headline("Mighty Ortiz makes sure Sox can rest easy Just imagine what David Ortiz could do on a good night's rest. Ortiz spent the night before last with his baby boy, D'Angelo, who is barely 1 month old. He had planned on attending the Red Sox' Family Day at Fenway Park yesterday morning, but he had to sleep in. After all, Ortiz had a son at home, and he ..."),
-        Headline("They've caught his eye In  helping themselves,  Ricky Bryant, Chas Gessner, Michael Jennings, and David Patten did nothing Friday night to make Bill Belichick's decision on what to do with his receivers any easier."),
-        Headline("Indians Mount Charge The Cleveland Indians pulled within one game of the AL Central lead by beating the Minnesota Twins, 7-1, Saturday night with home runs by Travis Hafner and Victor Martinez."),
-        Headline("Sister of man who died in Vancouver police custody slams chief (Canadian Press) Canadian Press - VANCOUVER (CP) - The sister of a man who died after a violent confrontation with police has demanded the city's chief constable resign for defending the officer involved."),
-        Headline("Man Sought  #36;50M From McGreevey, Aides Say (AP) AP - The man who claims Gov. James E. McGreevey sexually harassed him was pushing for a cash settlement of up to  #36;50 million before the governor decided to announce that he was gay and had an extramarital affair, sources told The Associated Press."),
-        Headline("Explosions Echo Throughout Najaf NAJAF, Iraq - Explosions and gunfire rattled through the city of Najaf as U.S. troops in armored vehicles and tanks rolled back into the streets here Sunday, a day after the collapse of talks - and with them a temporary cease-fire - intended to end the fighting in this holy city..."),
-        Headline("Frail Pope Celebrates Mass at Lourdes LOURDES, France - A frail Pope John Paul II, breathing heavily and gasping at times, celebrated an open-air Mass on Sunday for several hundred thousand pilgrims, many in wheelchairs, at a shrine to the Virgin Mary that is associated with miraculous cures.    At one point he said help me in Polish while struggling through his homily in French..."),
-        Headline("Venezuela Prepares for Chavez Recall Vote Supporters and rivals warn of possible fraud; government says Chavez's defeat could produce turmoil in world oil market."),
-        Headline("1994 Law Designed to Preserve Guard Jobs (AP) AP - A 1994 law strengthened job protections for National Guard and Reserve troops called to active duty. Here are major provisions of the Uniformed Services Employment and Reemployment Rights Act (USERRA)."),
-        Headline("Iran Warns Its Missiles Can Hit Anywhere in Israel  TEHRAN (Reuters) - A senior Iranian military official said  Sunday Israel and the United States would not dare attack Iran  since it could strike back anywhere in Israel with its latest  missiles, news agencies reported."),
-        Headline("Afghan Army Dispatched to Calm Violence KABUL, Afghanistan - Government troops intervened in Afghanistan's latest outbreak of deadly fighting between warlords, flying from the capital to the far west on U.S. and NATO airplanes to retake an air base contested in the violence, officials said Sunday...")
+        Headline(
+            "Fears for T N pension after talks Unions representing workers at Turner Newall say they are 'disappointed' after talks with the company's new owners.",
+            correctClassification = "Business"
+        ),
+        Headline(
+            "The Race is On: Second Private Team Sets Launch Date for Human Spaceflight (SPACE.com) SPACE.com - TORONTO, Canada -- A second private team of rocketeers competing for the Ansari X Prize -- a  $10 million award for the first private team to launch a reusable manned spacecraft into suborbital flight twice in two weeks -- has unveiled their launch date.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Mighty Ortiz makes sure Sox can rest easy Just imagine what David Ortiz could do on a good night's rest. Don't look now, but the Red Sox are just one game behind the Yankees in the loss column.",
+            correctClassification = "Sports"
+        ),
+        Headline(
+            "Sister of man who died in Vancouver police custody slams chief (Canadian Press) Canadian Press - VANCOUVER (CP) - The sister of a man who died in police custody after being repeatedly shot with a Taser has slammed the police chief for saying the death was not suspicious.",
+            correctClassification = "World"
+        ),
+        Headline(
+            "Ky. Company Wins Grant to Study Peptides (AP) AP - A company founded by a chemistry researcher at the University of Louisville won a grant to develop a method of producing better peptides, which are short chains of amino acids, the building blocks of proteins.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Prediction Unit Helps Forecast Wildfires (AP) AP - It's barely dawn when Mike Fitzpatrick starts his shift with a blur of colorful maps, figures and endless charts, but already he knows what the day will bring. Lightning will strike in places he expects. Winds will pick up, moist places will dry and flames will roar.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Calif. Aims to Limit Farm-Related Smog (AP) AP - Southern California's smog-fighting agency went after emissions of the bovine variety Friday, adopting the nation's first rules to reduce air pollution from dairy cow manure.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Open Letter Against British Copyright Indoctrination in Schools The British Department for Education and Skills (DfES) recently launched a Music Manifesto campaign, with the ostensible intention of educating the next generation of British musicians. Unfortunately, they also teamed up with the music industry (EMI, and various artists) to make this popular. EMI has apparently negotiated their end well, so that children in our schools will now be indoctrinated about the illegality of downloading music.The ignorance and audacity of this got to me a little, so I wrote an open letter to the DfES about it. Unfortunately, it's pedantic, as I suppose you have to be when writing to goverment representatives. But I hope you find it useful, and perhaps feel inspired to do something similar, if or when the same thing has happened in your area.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Loosing the War on Terrorism Sven Jaschan, self-confessed author of the Netsky and Sasser viruses, is responsible for 70 percent of virus infections in 2004, according to a six-month virus roundup published Wednesday by antivirus company Sophos. The 18-year-old Jaschan was taken into custody in Germany in May by police who said he had admitted programming both the Netsky and Sasser worms, something experts at Microsoft confirmed. (A Microsoft antivirus reward program led to the teenager's arrest.) During the five months preceding Jaschan's capture, there were at least 25 variants of Netsky and one of the port-scanning network worm Sasser. Graham Cluley, senior technology consultant at Sophos, said it was staggeri ...",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "FOAFKey: FOAF, PGP, Key Distribution, and Bloom Filters FOAF/LOAF  and bloom filters have a lot of interesting properties for social network and whitelist distribution. I think we can go one level higher though and include GPG OpenPGP key fingerprint distribution in the FOAF file for simple web-of-trust based key distribution. What if we used FOAF and included the PGP key fingerprints for identities? This could mean a lot.  You include the PGP key fingerprints within the FOAF file of your direct friends and then include a bloom filter of the PGP key fingerprints of your entire whitelist (the source FOAF file would of course need to be encrypted ). Your whitelist would be populated from the social network as your client discovered new identit ... ",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "E-mail scam targets police chief Wiltshire Police warns about phishing after its fraud squad chief was targeted.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Card fraud unit nets 36,000 cards In its first two years, the UK's dedicated card fraud unit, has recovered 36,000 stolen cards and 171 arrests - and estimates it saved 65m.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Group to Propose New High-Speed Wireless Format  LOS ANGELES (Reuters) - A group of technology companies  including Texas Instruments Inc. STMicroelectronics and Broadcom Corp., on Thursday said they  will propose a new wireless networking standard up to 10 times  the speed of the current generation.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Apple Launches Graphics Software, Video Bundle  LOS ANGELES (Reuters) - Apple Computer Inc. on  Tuesday began shipping a new program designed to let users  create real-time motion graphics and unveiled a discount  video-editing software bundle featuring its flagship Final Cut  Pro software.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Dutch Retailer Beats Apple to Local Download Market  AMSTERDAM (Reuters) - Free Record Shop, a Dutch music  retail chain, beat Apple Computer Inc. to market on Tuesday  with the launch of a new download service in Europe's latest  battleground for digital song services.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Super ant colony hits Australia A giant 100km colony of ants  which has been discovered in Melbourne, Australia, could threaten local insect species.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Socialites unite dolphin groups Dolphin groups, or pods, rely on socialites to keep them from collapsing, scientists claim.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Teenage T. rex's monster growth Tyrannosaurus rex achieved its massive size due to an enormous growth spurt during its adolescent years.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Scientists Discover Ganymede has a Lumpy Interior Jet Propulsion Lab -- Scientists have discovered irregular lumps beneath the icy surface of Jupiter's largest moon, Ganymede. These irregular masses may be rock formations, supported by Ganymede's icy shell for billions of years...",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Mars Rovers Relay Images Through Mars Express European Space Agency -- ESAs Mars Express has relayed pictures from one of NASA's Mars rovers for the first time, as part of a set of interplanetary networking demonstrations.     The demonstrations pave the way for future Mars missions to draw on joint interplanetary networking capabilities...",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Rocking the Cradle of Life When did life begin? One evidential clue stems from the fossil records in Western Australia, although whether these layered sediments are biological or chemical has spawned a spirited debate. Oxford researcher, Nicola McLoughlin, describes some of the issues in contention.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Storage, servers bruise HP earnings update Earnings per share rise compared with a year ago, but company misses analysts' expectations by a long shot.",
+            correctClassification = "Business"
+        ),
+        Headline(
+            "IBM to hire even more new workers By the end of the year, the computing giant plans to have its biggest headcount since 1991.",
+            correctClassification = "Business"
+        ),
+        Headline(
+            "Sun's Looking Glass Provides 3D View Developers get early code for new operating system 'skin' still being crafted.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "IBM Chips May Someday Heal Themselves New technology applies electrical fuses to help identify and repair faults.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Some People Not Eligible to Get in on Google IPO Google has billed its IPO as a way for everyday people to get in on the process, denying Wall Street the usual stranglehold it's had on IPOs. Public bidding, a minimum of just five shares, an open process with 28 underwriters - all this pointed to a new level of public participation. But this isn't the case.",
+            correctClassification = "Business"
+        ),
+        Headline(
+            "Rivals Try to Turn Tables on Charles Schwab By MICHAEL LIEDTKE     SAN FRANCISCO (AP) -- With its low prices and iconoclastic attitude, discount stock broker Charles Schwab Corp. (SCH) represented an annoying stone in Wall Street's wing-tipped shoes for decades...",
+            correctClassification = "Business"
+        ),
+        Headline(
+            "News: Sluggish movement on power grid cyber security Industry cyber security standards fail to reach some of the most vulnerable components of the power grid.",
+            correctClassification = "Sci/Tech"
+        ),
+        Headline(
+            "Giddy Phelps Touches Gold for First Time Michael Phelps won the gold medal in the 400 individual medley and set a world record in a time of 4 minutes 8.26 seconds.",
+            correctClassification = "Sports"
+        ),
+        Headline(
+            "Tougher rules won't soften Law's game FOXBOROUGH -- Looking at his ridiculously developed upper body, with huge biceps and hardly an ounce of fat, it's easy to see why Ty Law, arguably the best cornerback in football, chooses physical play over finesse. That's not to imply that he's lacking a finesse component, because he can shut down his side of the field much as Deion Sanders ...",
+            correctClassification = "Sports"
+        ),
+        Headline(
+            "Shoppach doesn't appear ready to hit the next level With the weeks dwindling until Jason Varitek enters free agency, the Red Sox continue to carefully monitor Kelly Shoppach , their catcher of the future, in his climb toward the majors. The Sox like most of what they have seen at Triple A Pawtucket from Shoppach, though it remains highly uncertain whether he can make the adjustments at the plate ...",
+            correctClassification = "Sports"
+        ),
+        Headline(
+            "Mighty Ortiz makes sure Sox can rest easy Just imagine what David Ortiz could do on a good night's rest. Ortiz spent the night before last with his baby boy, D'Angelo, who is barely 1 month old. He had planned on attending the Red Sox' Family Day at Fenway Park yesterday morning, but he had to sleep in. After all, Ortiz had a son at home, and he ...",
+            correctClassification = "Sports"
+        ),
+        Headline(
+            "They've caught his eye In  helping themselves,  Ricky Bryant, Chas Gessner, Michael Jennings, and David Patten did nothing Friday night to make Bill Belichick's decision on what to do with his receivers any easier.",
+            correctClassification = "Sports"
+        ),
+        Headline(
+            "Indians Mount Charge The Cleveland Indians pulled within one game of the AL Central lead by beating the Minnesota Twins, 7-1, Saturday night with home runs by Travis Hafner and Victor Martinez.",
+            correctClassification = "Sports"
+        ),
+        Headline(
+            "Sister of man who died in Vancouver police custody slams chief (Canadian Press) Canadian Press - VANCOUVER (CP) - The sister of a man who died after a violent confrontation with police has demanded the city's chief constable resign for defending the officer involved.",
+            correctClassification = "World"
+        ),
+        Headline(
+            "Man Sought  $50M From McGreevey, Aides Say (AP) AP - The man who claims Gov. James E. McGreevey sexually harassed him was pushing for a cash settlement of up to  $50 million before the governor decided to announce that he was gay and had an extramarital affair, sources told The Associated Press.",
+            correctClassification = "World"
+        ),
+        Headline(
+            "Explosions Echo Throughout Najaf NAJAF, Iraq - Explosions and gunfire rattled through the city of Najaf as U.S. troops in armored vehicles and tanks rolled back into the streets here Sunday, a day after the collapse of talks - and with them a temporary cease-fire - intended to end the fighting in this holy city...",
+            correctClassification = "World"
+        ),
+        Headline(
+            "Frail Pope Celebrates Mass at Lourdes LOURDES, France - A frail Pope John Paul II, breathing heavily and gasping at times, celebrated an open-air Mass on Sunday for several hundred thousand pilgrims, many in wheelchairs, at a shrine to the Virgin Mary that is associated with miraculous cures.    At one point he said help me in Polish while struggling through his homily in French...",
+            correctClassification = "World"
+        ),
+        Headline(
+            "Venezuela Prepares for Chavez Recall Vote Supporters and rivals warn of possible fraud; government says Chavez's defeat could produce turmoil in world oil market.",
+            correctClassification = "World"
+        ),
+        Headline(
+            "1994 Law Designed to Preserve Guard Jobs (AP) AP - A 1994 law strengthened job protections for National Guard and Reserve troops called to active duty. Here are major provisions of the Uniformed Services Employment and Reemployment Rights Act (USERRA).",
+            correctClassification = "World"
+        ),
+        Headline(
+            "Iran Warns Its Missiles Can Hit Anywhere in Israel  TEHRAN (Reuters) - A senior Iranian military official said  Sunday Israel and the United States would not dare attack Iran  since it could strike back anywhere in Israel with its latest  missiles, news agencies reported.",
+            correctClassification = "World"
+        ),
+        Headline(
+            "Afghan Army Dispatched to Calm Violence KABUL, Afghanistan - Government troops intervened in Afghanistan's latest outbreak of deadly fighting between warlords, flying from the capital to the far west on U.S. and NATO airplanes to retake an air base contested in the violence, officials said Sunday...",
+            correctClassification = "World"
+        )
     )
 
     private val maxLength = 250
@@ -60,7 +186,11 @@ class LocalHeadlineDataSource : HeadlineDataSource {
         val headline = headlines[index].copy(id = index)
 
         return if (headline.text.length > maxLength) {
-            Headline(headline.text.substring(0, maxLength) + "...", id = headline.id)
+            Headline(
+                headline.text.substring(0, maxLength) + "...",
+                id = headline.id,
+                correctClassification = headline.correctClassification
+            )
         } else {
             headline
         }
