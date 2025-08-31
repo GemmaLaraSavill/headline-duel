@@ -59,7 +59,6 @@ import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerTextLight
 import dev.myhappyplace.headlineduel.ui.viewmodel.HeadlineViewModel
 import java.util.Locale
 
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
@@ -107,6 +106,32 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = stringResource(id = R.string.headline_prompt),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 18.sp,
+                ),
+                textAlign = TextAlign.Left,
+                modifier = Modifier.padding(all = 16.dp)
+            )
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondary
+                )
+            ) {
+                Text(
+                    text = state.headline,
+                    style = MaterialTheme.typography.headlineSmall.copy(fontSize = 22.sp),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(16.dp),
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
             AnimatedContent(
                 targetState = uiAnimationState,
                 label = "UiStateAnimation",
@@ -121,87 +146,27 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                 when (targetUiState) {
                     HeadlineScreenAnimationState.Loading -> LoadingState()
                     HeadlineScreenAnimationState.Question -> {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.headline_prompt),
-                                style = MaterialTheme.typography.bodyLarge.copy(
-                                    fontSize = 18.sp,
-                                ),
-                                textAlign = TextAlign.Left,
-                                modifier = Modifier.padding(all = 16.dp)
-                            )
-                            Card(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.secondary
-                                )
-                            ) {
-                                Text(
-                                    text = state.headline,
-                                    style = MaterialTheme.typography.headlineSmall.copy(fontSize = 22.sp),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier.padding(16.dp),
-                                    color = MaterialTheme.colorScheme.onSecondary
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(16.dp))
-                            val categories = listOf(
-                                R.string.world,
-                                R.string.sports,
-                                R.string.business,
-                                R.string.sci_tech
-                            )
-                            QuestionState(
-                                categories = categories,
-                                onAnswer = viewModel::onUserAnswer
-                            )
-                        }
+                        val categories = listOf(
+                            R.string.world,
+                            R.string.sports,
+                            R.string.business,
+                            R.string.sci_tech
+                        )
+                        QuestionState(
+                            categories = categories,
+                            onAnswer = viewModel::onUserAnswer
+                        )
                     }
 
                     HeadlineScreenAnimationState.Answer -> {
                         state.userAnswer?.let { userAnswer ->
                             state.modelResult?.let { modelResult ->
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    Text(
-                                        text = stringResource(id = R.string.headline_prompt),
-                                        style = MaterialTheme.typography.bodyLarge.copy(
-                                            fontSize = 18.sp,
-                                        ),
-                                        textAlign = TextAlign.Left,
-                                        modifier = Modifier.padding(all = 16.dp)
-                                    )
-                                    Card(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp),
-                                        colors = CardDefaults.cardColors(
-                                            containerColor = MaterialTheme.colorScheme.secondary
-                                        )
-                                    ) {
-                                        Text(
-                                            text = state.headline,
-                                            style = MaterialTheme.typography.headlineSmall.copy(
-                                                fontSize = 22.sp
-                                            ),
-                                            textAlign = TextAlign.Center,
-                                            modifier = Modifier.padding(16.dp),
-                                            color = MaterialTheme.colorScheme.onSecondary
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                    AnswerState(
-                                        userAnswer = userAnswer,
-                                        modelResult = modelResult,
-                                        onNext = viewModel::nextHeadline,
-                                        locale = locale
-                                    )
-                                }
+                                AnswerState(
+                                    userAnswer = userAnswer,
+                                    modelResult = modelResult,
+                                    onNext = viewModel::nextHeadline,
+                                    locale = locale
+                                )
                             }
                         }
                     }
