@@ -47,8 +47,7 @@ See Headline Duel in action:
 ## 📚 Learning Context
 
 This project started as part of my **Udacity Generative AI Nanodegree** to fine-tune a model.  
-By building this app, my aim is to connect my work in **machine learning** with my experience in *
-*Android
+By building this app, my aim is to connect my work in **machine learning** with my experience in **Android
 development**  and bring the model into a practical, real-world test scenario.
 
 ## 👩‍💻 Author
