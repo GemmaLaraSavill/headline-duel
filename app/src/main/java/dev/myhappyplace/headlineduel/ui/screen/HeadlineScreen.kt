@@ -5,20 +5,25 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Business
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Sports
@@ -40,6 +45,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -130,8 +137,6 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSecondary
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-
             AnimatedContent(
                 targetState = uiAnimationState,
                 label = "UiStateAnimation",
@@ -165,7 +170,8 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                                     userAnswer = userAnswer,
                                     modelResult = modelResult,
                                     onNext = viewModel::nextHeadline,
-                                    locale = locale
+                                    locale = locale,
+                                    correctClassification = state.correctClassification
                                 )
                             }
                         }
@@ -185,7 +191,8 @@ fun LoadingState() {
 @Composable
 fun QuestionState(categories: List<Int>, onAnswer: (String) -> Unit) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         categories.forEach { resId ->
@@ -219,10 +226,12 @@ fun AnswerState(
     userAnswer: String,
     modelResult: ClassificationResult,
     onNext: () -> Unit,
-    locale: Locale
+    locale: Locale,
+    correctClassification: String?
 ) {
-    val isCorrect = userAnswer == modelResult.label
-    val cardBackgroundColor = if (isCorrect) {
+    val isUserCorrect = userAnswer == correctClassification
+    val isModelCorrect = modelResult.label == correctClassification
+    val cardBackgroundColor = if (isUserCorrect) {
         if (isSystemInDarkTheme()) CorrectAnswerBackgroundDark else CorrectAnswerBackgroundLight
     } else {
         if (isSystemInDarkTheme()) WrongAnswerBackgroundDark else WrongAnswerBackgroundLight
@@ -230,18 +239,40 @@ fun AnswerState(
     val cardColors = CardDefaults.cardColors(containerColor = cardBackgroundColor)
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            colors = cardColors
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+        ) {
+            correctClassification?.let {
+                Text(
+                    text = stringResource(id = R.string.correct_classification, it),
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.padding(16.dp),
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        val darkenFactor = 0.2f
+        val darkerCardBackgroundColor =
+            lerp(cardBackgroundColor, Color.Black, darkenFactor)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = cardColors,
+            border = BorderStroke(2.dp, darkerCardBackgroundColor)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     text = stringResource(id = R.string.your_answer, userAnswer),
@@ -249,29 +280,41 @@ fun AnswerState(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                val score = String.format(locale, "%.2f", modelResult.score)
-                Text(
-                    text = stringResource(id = R.string.model_answer, modelResult.label, score),
-                    style = MaterialTheme.typography.titleLarge
-                )
+                Row {
+                    val score = String.format(locale, "%.2f", modelResult.score)
+                    Text(
+                        text = stringResource(id = R.string.model_answer, modelResult.label, score),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    val iconVector = if (isModelCorrect) Icons.Filled.Check else Icons.Filled.Close
+                    Icon(imageVector = iconVector, contentDescription = null)
+                }
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (isCorrect) {
-            Text(
-                text = stringResource(id = R.string.correct_answer),
-                color = if (isSystemInDarkTheme()) CorrectAnswerTextDark else CorrectAnswerTextLight,
-                style = MaterialTheme.typography.headlineMedium
-            )
-        } else {
-            Text(
-                text = stringResource(id = R.string.wrong_answer),
-                color = if (isSystemInDarkTheme()) WrongAnswerTextDark else WrongAnswerTextLight,
-                style = MaterialTheme.typography.headlineMedium
-            )
+        val messageTextId: Int
+        val textColor: Color
+
+        when {
+            isUserCorrect -> {
+                messageTextId = R.string.correct_answer_user
+                textColor =
+                    if (isSystemInDarkTheme()) CorrectAnswerTextDark else CorrectAnswerTextLight
+            }
+
+            else -> {
+                messageTextId = R.string.wrong_answer
+                textColor = if (isSystemInDarkTheme()) WrongAnswerTextDark else WrongAnswerTextLight
+            }
         }
+
+        Text(
+            text = stringResource(id = messageTextId),
+            color = textColor,
+            style = MaterialTheme.typography.headlineMedium
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
