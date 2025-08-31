@@ -12,7 +12,7 @@ predictions - a fun, interactive way to validate and showcase the model.
 
 See Headline Duel in action:
 
-[<img src="demo/Screenshot_20250831_121355.png" alt="Watch the demo" width="200"/>](demo/Screen_recording_20250831_121158.mp4)
+[<img src="demo/headline-duel-demo.gif" alt="Watch the demo" width="200"/>](demo/headline-duel-demo.gif)
 
 ## ✨ Features
 
