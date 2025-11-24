@@ -7,5 +7,6 @@ data class HeadlineUiState(
     val userAnswer: String? = null,
     val modelResult: ClassificationResult? = null,
     val isLoading: Boolean = false,
-    val correctClassification: String? = null
+    val correctClassification: String? = null,
+    val error: HeadlineError? = null
 )

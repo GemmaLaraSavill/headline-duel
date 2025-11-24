@@ -25,9 +25,10 @@ class NewsClassifierRemoteDataSourceImplTest {
         val expectedPredictionJsonArrayString = """["$expectedLabel ($expectedScore)"]"""
 
         val mockEngine = MockEngine { request ->
-            when (request.url.encodedPath) {
+            val path = request.url.encodedPath
+            when {
                 // Path for the first call (POST to get event_id)
-                "/gradio_api/call/predict" -> {
+                path.endsWith("/gradio_api/call/predict") && !path.contains(testEventId) -> {
                     println("MockEngine: Responding to /gradio_api/call/predict with event_id")
                     respond(
                         content = """{"event_id":"$testEventId"}""",
@@ -41,7 +42,7 @@ class NewsClassifierRemoteDataSourceImplTest {
                     )
                 }
                 // Path for the second call (GET to get SSE data)
-                "/gradio_api/call/predict/$testEventId" -> {
+                path.endsWith("/gradio_api/call/predict/$testEventId") -> {
                     println("MockEngine: Responding to /gradio_api/call/predict/$testEventId with SSE")
                     val sseData = """
                         event: data
@@ -63,8 +64,8 @@ class NewsClassifierRemoteDataSourceImplTest {
                 }
 
                 else -> {
-                    println("MockEngine: Unexpected URL - ${request.url.encodedPath}")
-                    error("MockEngine: Unexpected URL - ${request.url.encodedPath}")
+                    println("MockEngine: Unexpected URL - $path (Full: ${request.url})")
+                    error("MockEngine: Unexpected URL - $path (Full: ${request.url})")
                 }
             }
         }

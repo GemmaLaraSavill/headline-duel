@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -27,6 +28,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Sports
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -63,6 +65,7 @@ import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerBackgroundDark
 import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerBackgroundLight
 import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerTextDark
 import dev.myhappyplace.headlineduel.ui.theme.WrongAnswerTextLight
+import dev.myhappyplace.headlineduel.ui.viewmodel.HeadlineError
 import dev.myhappyplace.headlineduel.ui.viewmodel.HeadlineViewModel
 import java.util.Locale
 
@@ -75,6 +78,7 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
 
     val uiAnimationState = when {
         state.isLoading -> HeadlineScreenAnimationState.Loading
+        state.error != null -> HeadlineScreenAnimationState.Error
         state.modelResult == null -> HeadlineScreenAnimationState.Question
         else -> HeadlineScreenAnimationState.Answer
     }
@@ -100,10 +104,8 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
-                }
-            )
-        }
-    ) { paddingValues ->
+                })
+        }) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -124,8 +126,7 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(
+                    .padding(16.dp), colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondary
                 )
             ) {
@@ -138,28 +139,21 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                 )
             }
             AnimatedContent(
-                targetState = uiAnimationState,
-                label = "UiStateAnimation",
-                transitionSpec = {
+                targetState = uiAnimationState, label = "UiStateAnimation", transitionSpec = {
                     if (targetState == HeadlineScreenAnimationState.Answer && initialState == HeadlineScreenAnimationState.Loading) {
                         fadeIn() togetherWith fadeOut()
                     } else {
                         fadeIn() togetherWith fadeOut()
                     }
-                }
-            ) { targetUiState ->
+                }) { targetUiState ->
                 when (targetUiState) {
                     HeadlineScreenAnimationState.Loading -> LoadingState()
                     HeadlineScreenAnimationState.Question -> {
                         val categories = listOf(
-                            R.string.world,
-                            R.string.sports,
-                            R.string.business,
-                            R.string.sci_tech
+                            R.string.world, R.string.sports, R.string.business, R.string.sci_tech
                         )
                         QuestionState(
-                            categories = categories,
-                            onAnswer = viewModel::onUserAnswer
+                            categories = categories, onAnswer = viewModel::onUserAnswer
                         )
                     }
 
@@ -176,6 +170,18 @@ fun HeadlineScreen(viewModel: HeadlineViewModel, onNavigateToInfo: () -> Unit) {
                             }
                         }
                     }
+
+                    HeadlineScreenAnimationState.Error -> {
+                        state.error?.let { error ->
+                            val errorMessage = when (error) {
+                                HeadlineError.SERVER_WARMING_UP -> stringResource(id = R.string.error_server_warming_up)
+                                HeadlineError.GENERIC_CONNECTION_ERROR -> stringResource(id = R.string.error_generic_connection)
+                            }
+                            ErrorState(
+                                error = errorMessage, onRetry = viewModel::retry
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -187,19 +193,48 @@ fun LoadingState() {
     CircularProgressIndicator()
 }
 
+@Composable
+fun ErrorState(error: String, onRetry: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Warning,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.error,
+            modifier = Modifier.size(48.dp)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = stringResource(id = R.string.error_title),
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.error
+        )
+        Text(
+            text = error,
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(16.dp)
+        )
+        OutlinedButton(onClick = onRetry) {
+            Text(stringResource(id = R.string.retry))
+        }
+    }
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun QuestionState(categories: List<Int>, onAnswer: (String) -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         categories.forEach { resId ->
             val category = stringResource(id = resId)
             OutlinedButton(
-                onClick = { onAnswer(category) },
-                modifier = Modifier
+                onClick = { onAnswer(category) }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(4.dp)
             ) {
@@ -261,8 +296,7 @@ fun AnswerState(
         }
         Spacer(modifier = Modifier.height(16.dp))
         val darkenFactor = 0.2f
-        val darkerCardBackgroundColor =
-            lerp(cardBackgroundColor, Color.Black, darkenFactor)
+        val darkerCardBackgroundColor = lerp(cardBackgroundColor, Color.Black, darkenFactor)
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = cardColors,
@@ -319,8 +353,7 @@ fun AnswerState(
         Spacer(modifier = Modifier.height(32.dp))
 
         OutlinedButton(
-            onClick = onNext,
-            modifier = Modifier
+            onClick = onNext, modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
         ) {
