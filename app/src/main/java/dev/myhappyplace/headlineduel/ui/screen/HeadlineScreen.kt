@@ -53,6 +53,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.myhappyplace.headlineduel.R
@@ -362,4 +363,35 @@ fun AnswerState(
             Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
         }
     }
+}
+
+@PreviewLightDark
+@Composable
+private fun QuestionStatePreview() {
+    val categories = listOf(
+        R.string.world,
+        R.string.sports,
+        R.string.business,
+        R.string.sci_tech
+    )
+    QuestionState(categories = categories, onAnswer = {})
+}
+
+@PreviewLightDark
+@Composable
+private fun AnswerStatePreview() {
+    val modelResult = ClassificationResult(label = "Sports", score = 0.95)
+    AnswerState(
+        userAnswer = "Sports",
+        modelResult = modelResult,
+        onNext = {},
+        locale = Locale.getDefault(),
+        correctClassification = "Sports"
+    )
+}
+
+@PreviewLightDark
+@Composable
+private fun ErrorStatePreview() {
+    ErrorState(error = "This is a preview error message.", onRetry = {})
 }
